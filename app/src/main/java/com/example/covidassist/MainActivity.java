@@ -19,7 +19,6 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
-
     Button buttonPhoneAuth;
     private static final int RC_SIGN_IN = 101;
 
@@ -27,6 +26,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
+            Intent intent = new Intent(MainActivity.this,UserFeedActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
         buttonPhoneAuth = findViewById(R.id.buttonPhoneAuth);
         // Set button listen
         buttonPhoneAuth.setOnClickListener(new View.OnClickListener() {
@@ -56,8 +61,10 @@ public class MainActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                showAlertDialog(user);
+                //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                //showAlertDialog(user);
+                Intent intent = new Intent(MainActivity.this,UserFeedActivity.class);
+                startActivity(intent);
             } else {
                 /**
                  *   Sign in failed. If response is null the user canceled the
@@ -89,4 +96,6 @@ public class MainActivity extends AppCompatActivity {
         // Showing Alert Message
         mAlertDialog.show();
     }
+
+
 }

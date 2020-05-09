@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         buttonPhoneAuth = findViewById(R.id.buttonPhoneAuth);
-        // Set button listen
+
         buttonPhoneAuth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

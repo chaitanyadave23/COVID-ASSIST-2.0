@@ -5,6 +5,9 @@ public class feed {
     private String item_quantity;
     private String item_desc;
 
+    public feed() {
+    }
+
     public feed(String item_name, String item_quantity, String item_desc) {
         this.item_name = item_name;
         this.item_quantity = item_quantity;

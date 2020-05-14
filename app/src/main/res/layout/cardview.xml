@@ -1,52 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:weightSum="2"
-    android:orientation="horizontal"
-    android:baselineAligned="false">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="3dp"
+    android:elevation="3dp"
+    app:cardUseCompatPadding="true">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:id="@+id/image"
+            android:src="@mipmap/ic_launcher"/>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/item_name"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:id="@+id/title"
+            android:text="Title"
+            android:textSize="22sp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:layout_toRightOf="@id/image"
+            android:layout_toEndOf="@id/image"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_margin="5dp"/>
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/item_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:text="@string/item_name"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:layout_toRightOf="@id/image"
+            android:layout_toEndOf="@id/image"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/title"/>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/item_desc"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <TextView
             android:id="@+id/item_desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:text="@string/item_desc"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_toRightOf="@id/image"
+            android:layout_toEndOf="@id/image"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/item_name"/>
+
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/item_quantity"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <TextView
             android:id="@+id/item_quantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-</LinearLayout>
+            android:text="@string/item_quantity"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_toRightOf="@id/image"
+            android:layout_toEndOf="@id/image"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/item_desc"/>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

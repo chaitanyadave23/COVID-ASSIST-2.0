@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if(FirebaseAuth.getInstance().getCurrentUser()!=null){
-            Intent intent = new Intent(MainActivity.this,UserFeedActivity.class);
+            Intent intent = new Intent(MainActivity.this,TabActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 // Successfully signed in
                 //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 //showAlertDialog(user);
-                Intent intent = new Intent(MainActivity.this,UserFeedActivity.class);
+                Intent intent = new Intent(MainActivity.this,TabActivity.class);
                 startActivity(intent);
             } else {
                 /**

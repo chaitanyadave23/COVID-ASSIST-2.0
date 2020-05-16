@@ -11,9 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddNewFeedActivity"></activity>
+        <activity android:name=".TabActivity"></activity>
+        <activity android:name=".AddNewFeedActivity" />
         <activity android:name=".UserFeedActivity" />
-        <activity android:name=".MainActivity" android:theme="@style/Theme.AppCompat.Light">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,14 +22,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-
+import android.view.View.OnClickListener;
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UserFeedFragment extends Fragment {
+public class UserFeedFragment extends Fragment implements OnClickListener{
 
     public UserFeedFragment() {
         // Required empty public constructor
@@ -41,20 +42,26 @@ public class UserFeedFragment extends Fragment {
     MyAdapter adapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+
+
+
+
+        return inflater.inflate(R.layout.fragment_user_feed, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+
         add = getView().findViewById(R.id.floatingActionAdd);
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), AddNewFeedActivity.class);
-                startActivity(intent);
-            }
-        });
+        add.setOnClickListener((OnClickListener) this);
 
-
-        /*recyclerView = (RecyclerView) getView().findViewById(R.id.myRecycler);
+        recyclerView = (RecyclerView) getView().findViewById(R.id.myRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         list = new ArrayList<feed>();
         reference = FirebaseDatabase.getInstance().getReference().child("UserFeed");
@@ -75,7 +82,17 @@ public class UserFeedFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                // Toast.makeText(UserFeedActivity.this, "Something is wrong", Toast.LENGTH_SHORT).show();
             }
-        });*/
-        return inflater.inflate(R.layout.fragment_user_feed, container, false);
+        });
+
+
     }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(getActivity(), AddNewFeedActivity.class);
+        startActivity(intent);
+    }
+
+
+
 }

@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".UserFeedActivity">
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/myRecycler"
         android:layout_width="match_parent"

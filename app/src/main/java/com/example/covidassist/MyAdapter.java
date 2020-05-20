@@ -11,17 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-    private Context mContext;
-    private List<feed> feeds;
+    Context mContext;
+    ArrayList<feed> feeds;
 
-    public MyAdapter(Context mContext, ArrayList<feed> feeds)
+    public MyAdapter(Context mContext , ArrayList<feed> f)
     {
         this.mContext = mContext;
-        this.feeds = feeds;
+        this.feeds = f;
     }
 
     @NonNull
@@ -31,21 +30,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.item_name.setText(feeds.get(position).getItem_name());
         holder.item_desc.setText(feeds.get(position).getItem_desc());
         holder.item_quantity.setText(feeds.get(position).getItem_quantity());
 
-       /* final feed userfeed = feeds.get(position);
+        final feed userfeed = feeds.get(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext,MessageActivity.class);
-                intent.putExtra("user_id",userfeed.getUser_id());
+                intent.putExtra("user_id",userfeed.getItem_name());
                 mContext.startActivity(intent);
             }
-        });*/
-
+        });
     }
 
     @Override
@@ -53,7 +51,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return feeds.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder
+    class MyViewHolder extends RecyclerView.ViewHolder
     {
         TextView item_name,item_desc,item_quantity;
         public MyViewHolder(@NonNull View itemView) {

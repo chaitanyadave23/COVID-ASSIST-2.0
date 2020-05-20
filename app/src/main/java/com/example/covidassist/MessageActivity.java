@@ -59,7 +59,7 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 feed user = dataSnapshot.getValue(feed.class);
-                username.setText(user.getUser_id());
+                username.setText(user.getItem_name());
             }
 
             @Override

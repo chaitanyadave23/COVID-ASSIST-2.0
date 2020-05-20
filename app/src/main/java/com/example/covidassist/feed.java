@@ -4,13 +4,14 @@ public class feed {
     private String item_name;
     private String item_quantity;
     private String item_desc;
-    private String user_id;
 
-    public feed(String item_name, String item_quantity, String item_desc, String user_id) {
+    public feed() {
+    }
+
+    public feed(String item_name, String item_quantity, String item_desc) {
         this.item_name = item_name;
         this.item_quantity = item_quantity;
         this.item_desc = item_desc;
-        this.user_id = user_id;
     }
 
     public String getItem_name() {
@@ -35,13 +36,5 @@ public class feed {
 
     public void setItem_desc(String item_desc) {
         this.item_desc = item_desc;
-    }
-
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
     }
 }

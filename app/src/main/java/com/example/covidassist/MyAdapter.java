@@ -36,7 +36,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.item_desc.setText(feeds.get(position).getItem_desc());
         holder.item_quantity.setText(feeds.get(position).getItem_quantity());
 
-        final feed userfeed = feeds.get(position);
+       /* final feed userfeed = feeds.get(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,7 +44,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 intent.putExtra("user_id",userfeed.getUser_id());
                 mContext.startActivity(intent);
             }
-        });
+        });*/
 
     }
 

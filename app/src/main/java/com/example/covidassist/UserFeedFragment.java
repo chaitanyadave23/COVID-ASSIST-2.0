@@ -44,11 +44,6 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-
-
-
-
         return inflater.inflate(R.layout.fragment_user_feed, container, false);
     }
 
@@ -65,9 +60,11 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         list = new ArrayList<feed>();
         reference = FirebaseDatabase.getInstance().getReference().child("UserFeed");
+
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren())
                 {
                     feed f = dataSnapshot1.getValue(feed.class);
@@ -80,7 +77,7 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-               // Toast.makeText(UserFeedActivity.this, "Something is wrong", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getActivity(), "Something is wrong", Toast.LENGTH_SHORT).show();
             }
         });
 

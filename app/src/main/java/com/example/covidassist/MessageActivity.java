@@ -18,11 +18,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+//import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MessageActivity extends AppCompatActivity {
 
-    CircleImageView profile_image;
+    //CircleImageView profile_image;
     TextView username;
 
     FirebaseUser fuser;
@@ -46,7 +46,7 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
-        profile_image = findViewById(R.id.profile_image);
+        //profile_image = findViewById(R.id.profile_image);
         username = findViewById(R.id.username);
 
         intent = getIntent();

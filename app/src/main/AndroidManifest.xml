@@ -12,7 +12,6 @@
         <activity android:name=".MessageActivity"></activity>
         <activity android:name=".TabActivity" />
         <activity android:name=".AddNewFeedActivity" />
-        <activity android:name=".UserFeedActivity" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light">

@@ -59,7 +59,7 @@ public class MessageActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_message);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);      //this is for getting the back button on the toolbar
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,15 +81,14 @@ public class MessageActivity extends AppCompatActivity {
         intent = getIntent();
         final String user_id = intent.getStringExtra("user_id");
         fuser = FirebaseAuth.getInstance().getCurrentUser();
-
+        username.setText(user_id);
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String msg = text_send.getText().toString();
-                if(!msg.equals("")) {
+                if (!msg.equals("")) {
                     sendMessage(fuser.getUid(), user_id, msg);
-                }
-                else{
+                } else {
                     Toast.makeText(MessageActivity.this, "You can't send empty message", Toast.LENGTH_SHORT).show();
                 }
                 text_send.setText("");
@@ -103,10 +102,10 @@ public class MessageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 feed user = dataSnapshot.getValue(feed.class);
                 assert user != null;
-                username.setText("");
+                //username.setText("");
 
 
-                readMessagges(fuser.getUid(),user_id);
+                readMessagges(fuser.getUid(), user_id);
             }
 
             @Override
@@ -116,18 +115,18 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 
-    private void sendMessage(String sender,String receiver,String message){
+    private void sendMessage(String sender, String receiver, String message) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("sender",sender);
-        hashMap.put("receiver",receiver);
-        hashMap.put("message",message);
+        hashMap.put("sender", sender);
+        hashMap.put("receiver", receiver);
+        hashMap.put("message", message);
 
         reference.child("Chats").push().setValue(hashMap);
     }
 
-    private void readMessagges(final String myid, final String userid){
+    private void readMessagges(final String myid, final String userid) {
         mchat = new ArrayList<>();
 
         reference = FirebaseDatabase.getInstance().getReference("Chats");
@@ -135,14 +134,14 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mchat.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Chat chat = snapshot.getValue(Chat.class);
-                    if(chat.getReceiver().equals(myid) && chat.getSender().equals(userid) ||
-                            chat.getReceiver().equals(userid) && chat.getSender().equals(myid)){
+                    if (chat.getReceiver().equals(myid) && chat.getSender().equals(userid) ||
+                            chat.getReceiver().equals(userid) && chat.getSender().equals(myid)) {
                         mchat.add(chat);
                     }
 
-                    messageAdapter = new MessageAdapter(MessageActivity.this,mchat);
+                    messageAdapter = new MessageAdapter(MessageActivity.this, mchat);
                     recyclerView.setAdapter(messageAdapter);
                 }
             }
@@ -154,3 +153,4 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 }
+

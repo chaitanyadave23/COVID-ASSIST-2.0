@@ -76,7 +76,7 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/user_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
             android:layout_toRightOf="@id/image"
             android:text="User_id:"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold" />-->
 
 
 

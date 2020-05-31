@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.covidassist.AddNewFeedActivity;
-import com.example.covidassist.Adapters.MyAdapter;
+import com.example.covidassist.Adapters.UserFeedAdapter;
 import com.example.covidassist.R;
 import com.example.covidassist.Model.feed;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -43,7 +43,7 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
     DatabaseReference reference;
     RecyclerView recyclerView;
     ArrayList<feed> list;
-    MyAdapter adapter;
+    UserFeedAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,7 +69,7 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                list.clear(); //to clear the data in the list once it is updated otherwise the list will not clear and all the data will be added again
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren())
                 {
                     feed f = dataSnapshot1.getValue(feed.class);
@@ -78,7 +78,7 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
 
                 }
 
-                adapter = new MyAdapter(getActivity(),list);
+                adapter = new UserFeedAdapter(getActivity(),list);
                 recyclerView.setAdapter(adapter);
             }
 

@@ -16,12 +16,12 @@ import com.example.covidassist.Model.feed;
 
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class UserFeedAdapter extends RecyclerView.Adapter<UserFeedAdapter.MyViewHolder> {
 
     private Context mContext;
     private List<feed> feeds;
 
-    public MyAdapter(Context mContext, List<feed> feeds) {
+    public UserFeedAdapter(Context mContext, List<feed> feeds) {
         this.mContext = mContext;
         this.feeds = feeds;
     }

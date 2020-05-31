@@ -20,6 +20,11 @@ public class MyFeedFragment extends Fragment {
         // Required empty public constructor
     }
 
+    FirebaseUser fuser;
+    DatabaseReference reference;
+    RecyclerView recyclerView;
+    ArrayList<feed> list;
+    MyFeedAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

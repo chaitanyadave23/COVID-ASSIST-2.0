@@ -96,6 +96,7 @@ public class MessageActivity extends AppCompatActivity {
                 text_send.setText("");
             }
         });
+
         assert user_id != null;
         reference = FirebaseDatabase.getInstance().getReference().child(user_id);
 

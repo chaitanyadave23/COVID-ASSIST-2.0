@@ -13,9 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.covidassist.Adapters.MyFeedAdapter;
+import com.example.covidassist.Adapters.MyChatAdapter;
+
 import com.example.covidassist.Model.Chat;
-import com.example.covidassist.Model.feed;
+import com.example.covidassist.Model.User;
+
 import com.example.covidassist.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -41,48 +44,10 @@ public class ChatFragment extends Fragment {
     FirebaseUser fuser;
     RecyclerView recyclerView;
     DatabaseReference reference;
-    List<feed> mUsers;
-    List<String> chatUserList;
-    MyFeedAdapter myFeedAdapter;
+    List<User> mUsers;
+    HashSet<String> chatUserList;
+    MyChatAdapter myChatAdapter;
 
-
-    public void readChats(){
-        mUsers = new ArrayList<>();
-        reference = FirebaseDatabase.getInstance().getReference("UserFeed");
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mUsers.clear();
-
-                for(DataSnapshot dataSnapshot: dataSnapshot.getChildren()){
-                    feed f = dataSnapshot.getValue(feed.class);
-
-                    for(String id: chatUserList){
-                        if(f.getUser_id().equals(id)){
-                            if(mUsers.size()!=0){
-                                for(feed ff: mUsers){
-                                    if(!f.getUser_id().equals(ff.getUser_id())) mUsers.add(f);
-                                }
-                            }
-                        }
-                        else{
-                            mUsers.add(f);
-                        }
-                    }
-                }
-
-                myFeedAdapter = new MyFeedAdapter(getActivity(), mUsers);
-                recyclerView.setAdapter(myFeedAdapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -100,7 +65,7 @@ public class ChatFragment extends Fragment {
         fuser = FirebaseAuth.getInstance().getCurrentUser();
 
         reference = FirebaseDatabase.getInstance().getReference("Chats");
-        chatUserList = new ArrayList<>();
+        chatUserList = new HashSet<>();
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -110,15 +75,48 @@ public class ChatFragment extends Fragment {
                     if(chat.getSender().equals(fuser.getUid())) chatUserList.add(chat.getReceiver());
                     if(chat.getReceiver().equals(fuser.getUid())) chatUserList.add(chat.getSender());
                 }
+
+                readChats();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-            readChats();
+
 
         });
     }
 
+
+
+    public void readChats(){
+        mUsers = new ArrayList<>();
+        reference = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mUsers.clear();
+
+                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                    User user = dataSnapshot1.getValue(User.class);
+
+                    for(String id: chatUserList){
+                        if(user.getUserid().equals(id)){
+                                mUsers.add(user);
+                        }
+                    }
+                }
+                 myChatAdapter = new MyChatAdapter(getActivity(), mUsers);
+                 recyclerView.setAdapter(myChatAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
 }

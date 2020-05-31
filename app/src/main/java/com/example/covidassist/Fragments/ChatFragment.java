@@ -13,7 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.covidassist.Adapters.MyFeedAdapter;
 import com.example.covidassist.Model.Chat;
+import com.example.covidassist.Model.feed;
 import com.example.covidassist.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,8 +41,49 @@ public class ChatFragment extends Fragment {
     FirebaseUser fuser;
     RecyclerView recyclerView;
     DatabaseReference reference;
+    List<feed> mUsers;
+    List<String> chatUserList;
+    MyFeedAdapter myFeedAdapter;
 
-    List<String> userList;
+
+    public void readChats(){
+        mUsers = new ArrayList<>();
+        reference = FirebaseDatabase.getInstance().getReference("UserFeed");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mUsers.clear();
+
+                for(DataSnapshot dataSnapshot: dataSnapshot.getChildren()){
+                    feed f = dataSnapshot.getValue(feed.class);
+
+                    for(String id: chatUserList){
+                        if(f.getUser_id().equals(id)){
+                            if(mUsers.size()!=0){
+                                for(feed ff: mUsers){
+                                    if(!f.getUser_id().equals(ff.getUser_id())) mUsers.add(f);
+                                }
+                            }
+                        }
+                        else{
+                            mUsers.add(f);
+                        }
+                    }
+                }
+
+                myFeedAdapter = new MyFeedAdapter(getActivity(), mUsers);
+                recyclerView.setAdapter(myFeedAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -55,16 +99,16 @@ public class ChatFragment extends Fragment {
 
         fuser = FirebaseAuth.getInstance().getCurrentUser();
 
-        reference = FirebaseDatabase.getInstance().getReference().child("UserFeed");
-        userList = new ArrayList<>();
+        reference = FirebaseDatabase.getInstance().getReference("Chats");
+        chatUserList = new ArrayList<>();
 
-        /*reference.addValueEventListener(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()){
                     Chat chat = snapshot.getValue(Chat.class);
-                    if(chat.getSender().equals(fuser.getUid())) userList.add(chat.getReceiver());
-                    if(chat.getReceiver().equals(fuser.getUid())) userList.add(chat.getSender());
+                    if(chat.getSender().equals(fuser.getUid())) chatUserList.add(chat.getReceiver());
+                    if(chat.getReceiver().equals(fuser.getUid())) chatUserList.add(chat.getSender());
                 }
             }
 
@@ -72,8 +116,9 @@ public class ChatFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
-*/
+            readChats();
 
+        });
     }
+
 }

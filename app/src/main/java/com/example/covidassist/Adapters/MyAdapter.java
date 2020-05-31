@@ -1,4 +1,4 @@
-package com.example.covidassist;
+package com.example.covidassist.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.example.covidassist.MessageActivity;
+import com.example.covidassist.R;
+import com.example.covidassist.feed;
+
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
@@ -18,7 +21,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private Context mContext;
     private List<feed> feeds;
 
-    MyAdapter(Context mContext, List<feed> feeds) {
+    public MyAdapter(Context mContext, List<feed> feeds) {
         this.mContext = mContext;
         this.feeds = feeds;
     }
@@ -39,7 +42,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext,MessageActivity.class);
+                Intent intent = new Intent(mContext, MessageActivity.class);
                 intent.putExtra("user_id",feeds.get(position).getUser_id());
                 mContext.startActivity(intent);
             }

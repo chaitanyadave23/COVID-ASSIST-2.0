@@ -1,4 +1,4 @@
-package com.example.covidassist;
+package com.example.covidassist.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.example.covidassist.AddNewFeedActivity;
+import com.example.covidassist.Adapters.MyAdapter;
+import com.example.covidassist.R;
+import com.example.covidassist.feed;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,7 +28,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import android.view.View.OnClickListener;
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 
 /**

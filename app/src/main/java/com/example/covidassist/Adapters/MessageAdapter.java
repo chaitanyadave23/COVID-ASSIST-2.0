@@ -1,8 +1,6 @@
-package com.example.covidassist;
+package com.example.covidassist.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
+import com.example.covidassist.Chat;
+import com.example.covidassist.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -29,7 +28,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
 
     FirebaseUser fuser;
 
-    MessageAdapter(Context mContext, List<Chat> mchat) {
+    public MessageAdapter(Context mContext, List<Chat> mchat) {
         this.mContext = mContext;
         this.mchat = mchat;
 //        this.imageurl = imageurl;

@@ -1,4 +1,4 @@
-package com.example.covidassist;
+package com.example.covidassist.Fragments;
 
 import android.os.Bundle;
 
@@ -8,13 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.covidassist.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChatFragment extends Fragment {
+public class MyFeedFragment extends Fragment {
 
-    public ChatFragment() {
+    public MyFeedFragment() {
         // Required empty public constructor
     }
 
@@ -23,6 +25,6 @@ public class ChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat, container, false);
+        return inflater.inflate(R.layout.fragment_my_feed, container, false);
     }
 }

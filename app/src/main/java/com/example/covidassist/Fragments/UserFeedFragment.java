@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import com.example.covidassist.AddNewFeedActivity;
 import com.example.covidassist.Adapters.MyAdapter;
 import com.example.covidassist.R;
-import com.example.covidassist.feed;
+import com.example.covidassist.Model.feed;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

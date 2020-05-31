@@ -17,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.covidassist.Adapters.MessageAdapter;
+import com.example.covidassist.Model.Chat;
+import com.example.covidassist.Model.feed;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

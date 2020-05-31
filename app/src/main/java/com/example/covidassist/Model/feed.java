@@ -1,4 +1,4 @@
-package com.example.covidassist;
+package com.example.covidassist.Model;
 
 public class feed {
     private String item_name;

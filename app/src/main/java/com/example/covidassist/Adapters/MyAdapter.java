@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.covidassist.MessageActivity;
 import com.example.covidassist.R;
-import com.example.covidassist.feed;
+import com.example.covidassist.Model.feed;
 
 import java.util.List;
 

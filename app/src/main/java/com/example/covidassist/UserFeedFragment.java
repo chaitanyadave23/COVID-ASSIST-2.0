@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,7 +37,7 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
         // Required empty public constructor
     }
     FloatingActionButton add;
-
+    FirebaseUser fuser;
     DatabaseReference reference;
     RecyclerView recyclerView;
     ArrayList<feed> list;
@@ -51,7 +53,8 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
+        fuser = FirebaseAuth.getInstance().getCurrentUser();;
+        //String fuid = fuser.getUid();
 
         add = getView().findViewById(R.id.floatingActionAdd);
         add.setOnClickListener((OnClickListener) this);
@@ -68,7 +71,9 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren())
                 {
                     feed f = dataSnapshot1.getValue(feed.class);
-                    list.add(f);
+                    final String fuid = fuser.getUid();
+                    if(!f.getUser_id().equals(fuid)) list.add(f);
+
                 }
 
                 adapter = new MyAdapter(getActivity(),list);

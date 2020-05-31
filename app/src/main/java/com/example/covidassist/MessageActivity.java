@@ -95,7 +95,7 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
         assert user_id != null;
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(user_id);
+        reference = FirebaseDatabase.getInstance().getReference().child(user_id);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override

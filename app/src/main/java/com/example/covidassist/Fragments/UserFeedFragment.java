@@ -98,5 +98,4 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
     }
 
 
-
 }

@@ -49,6 +49,7 @@ public class UserFeedAdapter extends RecyclerView.Adapter<UserFeedAdapter.MyView
         });
     }
 
+
     @Override
     public int getItemCount() {
         return feeds.size();

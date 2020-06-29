@@ -106,8 +106,7 @@ public class MessageActivity extends AppCompatActivity {
                 feed user = dataSnapshot.getValue(feed.class);
                 assert user != null;
                 //username.setText("");
-
-
+                
                 readMessagges(fuser.getUid(), user_id);
             }
 
@@ -117,6 +116,7 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void sendMessage(String sender, String receiver, String message) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();

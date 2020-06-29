@@ -22,9 +22,11 @@ public class AddNewFeedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_feed);
 
+
         item_name = findViewById(R.id.edt_item_name);
         item_quantity = findViewById(R.id.edt_item_quantity);
         item_desc = findViewById(R.id.edt_item_desc);
+
 
         add_new_feed = findViewById(R.id.btn_add_feed);
 
@@ -37,8 +39,19 @@ public class AddNewFeedActivity extends AppCompatActivity {
                 map.put("item_quantity", item_quantity.getText().toString());
                 map.put("item_desc", item_desc.getText().toString());
 
-                FirebaseDatabase.getInstance().getReference().child("UserFeed").push().setValue(map);
 
+                //code to for manual addition of data
+
+                /*HashMap<String, String> map = new HashMap<>();
+                map.put("Handle", "Nilesh@123");
+                map.put("Name", "Nilesh");
+                map.put("Phno","8279815881");
+                map.put("Userid", "MluNUAmes6el459mqiIniAI0bYe2");
+                map.put("Latitude", "30.3165");
+                map.put("Longitude", "78.0322");
+*/
+
+                FirebaseDatabase.getInstance().getReference().child("UserFeed").push().setValue(map);
 
                 Intent intent = new Intent(getApplicationContext(), TabActivity.class);
                 startActivity(intent);

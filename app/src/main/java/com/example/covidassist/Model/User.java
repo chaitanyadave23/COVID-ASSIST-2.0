@@ -5,6 +5,24 @@ public class User {
     private String Name;
     private String Phno;
     private String Userid;
+    private String Lati;
+    private String Longi;
+
+    public String getLati() {
+        return Lati;
+    }
+
+    public void setLati(String lati) {
+        Lati = lati;
+    }
+
+    public String getLongi() {
+        return Longi;
+    }
+
+    public void setLongi(String longi) {
+        Longi = longi;
+    }
 
     public String getHandle() {
         return Handle;
@@ -37,4 +55,6 @@ public class User {
     public void setUserid(String userid) {
         Userid = userid;
     }
+
+
 }

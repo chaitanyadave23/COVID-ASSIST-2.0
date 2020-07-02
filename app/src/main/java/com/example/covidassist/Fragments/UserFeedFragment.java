@@ -114,8 +114,6 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
                 list.clear(); //to clear the data in the list once it is updated otherwise the list will not clear and all the data will be added again
 
 
-
-
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren())
                 {
                     feed f = dataSnapshot1.getValue(feed.class);

@@ -48,7 +48,7 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
     RecyclerView recyclerView;
     ArrayList<feed> list;
     UserFeedAdapter adapter;
-    String longi, lati, otherid;
+    String longi, lati, otherid, s;
 
 
     //func to calculate the dist
@@ -86,6 +86,26 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
         recyclerView = (RecyclerView) getView().findViewById(R.id.myRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         list = new ArrayList<feed>();
+
+
+        //fetching the radius required from user table
+/*
+        reference1 = FirebaseDatabase.getInstance().getReference();
+
+        Query query = reference1.child("Users").orderByChild("Userid").equalTo(fuid);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String r = dataSnapshot.child("Radius").getValue().toString();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });*/
+
+
+
+
         reference = FirebaseDatabase.getInstance().getReference().child("UserFeed");
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -101,54 +121,20 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
                     feed f = dataSnapshot1.getValue(feed.class);
 
                     final String fuid = fuser.getUid();
-//---------------------------------------------------------------------------
 
-                   /* reference1 = FirebaseDatabase.getInstance().getReference();
+                    /*Double la1 = Double.parseDouble(f.getLatitude());
+                    Double lo1 = Double.parseDouble(f.getLongitude());*/
 
-                    otherid = f.getUser_id();
-
-                    Query query = reference1.child("Users").orderByChild("Userid").equalTo(otherid);
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-
-                            for (DataSnapshot user1 : dataSnapshot.getChildren()) {
-                                ArrayList<String> uu = user1.getValue(User.class);
-                                longi = uu.getLongi();
-                                lati = uu.getLati();
-                            }
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-*/
-//--------------------------------------------------------------------------
-
-                   /* Double la1 = Double.parseDouble(lati);
-                    Double lo1 = Double.parseDouble(longi);*/
-
-                    //Log.i("hello", lati);
-                   // String ccc=lati;
-                   // Log.i("hello", ccc);
                     Double la2 = 23.0225;
                     Double lo2 = 72.5714;
-
                     Double la1 = 30.3165;
                     Double lo1 = 78.0322;
 
 
-                    if(!f.getUser_id().equals(fuid) && distance(la1, lo1, la2, lo2) > 1000) list.add(f);
+
+                    if(!f.getUser_id().equals(fuid) && distance(la1, lo1, la2, lo2) < 1000) list.add(f);
 
                 }
-
-
-
-
-
 
 
                 adapter = new UserFeedAdapter(getActivity(),list);

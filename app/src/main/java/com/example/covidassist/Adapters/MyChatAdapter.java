@@ -22,7 +22,6 @@ public class MyChatAdapter extends RecyclerView.Adapter<MyChatAdapter.MyViewHold
     private Context mContext;
     private List<User> users;
 
-
     public MyChatAdapter(Context mContext, List<User> users) {
         this.mContext = mContext;
         this.users = users;

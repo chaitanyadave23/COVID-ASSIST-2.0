@@ -9,14 +9,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.covidassist.AddNewFeedActivity;
 import com.example.covidassist.Adapters.UserFeedAdapter;
-import com.example.covidassist.Model.User;
 import com.example.covidassist.R;
 import com.example.covidassist.Model.feed;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,7 +24,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -44,28 +41,9 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
     FloatingActionButton add;
     FirebaseUser fuser;
     DatabaseReference reference;
-    DatabaseReference reference1;
     RecyclerView recyclerView;
     ArrayList<feed> list;
     UserFeedAdapter adapter;
-    String longi, lati, otherid, s;
-
-
-    //func to calculate the dist
-    public static double distance(double lon1,double lat1,double lon2,double lat2)
-    {
-        lon1 = Math.toRadians(lon1);
-        lon2 = Math.toRadians(lon2);
-        lat1 = Math.toRadians(lat1);
-        lat2 = Math.toRadians(lat2);
-        double dlon = lon2 - lon1;
-        double dlat = lat2 - lat1;
-        double a = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon / 2),2);
-        double c = 2 * Math.asin(Math.sqrt(a));
-        double r = 6371;
-        return(c * r);
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,8 +55,8 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        fuser = FirebaseAuth.getInstance().getCurrentUser();
-        String fuid = fuser.getUid();
+        fuser = FirebaseAuth.getInstance().getCurrentUser();;
+        //String fuid = fuser.getUid();
 
         add = getView().findViewById(R.id.floatingActionAdd);
         add.setOnClickListener((OnClickListener) this);
@@ -86,54 +64,19 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
         recyclerView = (RecyclerView) getView().findViewById(R.id.myRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         list = new ArrayList<feed>();
-
-
-        //fetching the radius required from user table
-/*
-        reference1 = FirebaseDatabase.getInstance().getReference();
-
-        Query query = reference1.child("Users").orderByChild("Userid").equalTo(fuid);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String r = dataSnapshot.child("Radius").getValue().toString();
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });*/
-
-
-
-
         reference = FirebaseDatabase.getInstance().getReference().child("UserFeed");
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 list.clear(); //to clear the data in the list once it is updated otherwise the list will not clear and all the data will be added again
-
-
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren())
                 {
                     feed f = dataSnapshot1.getValue(feed.class);
-
                     final String fuid = fuser.getUid();
-
-                    /*Double la1 = Double.parseDouble(f.getLatitude());
-                    Double lo1 = Double.parseDouble(f.getLongitude());*/
-
-                    Double la2 = 23.0225;
-                    Double lo2 = 72.5714;
-                    Double la1 = 30.3165;
-                    Double lo1 = 78.0322;
-
-
-
-                    if(!f.getUser_id().equals(fuid) && distance(la1, lo1, la2, lo2) < 1000) list.add(f);
+                    if(!f.getUser_id().equals(fuid)) list.add(f);
 
                 }
-
 
                 adapter = new UserFeedAdapter(getActivity(),list);
                 recyclerView.setAdapter(adapter);
@@ -153,6 +96,7 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
         Intent intent = new Intent(getActivity(), AddNewFeedActivity.class);
         startActivity(intent);
     }
+
 
 
 }

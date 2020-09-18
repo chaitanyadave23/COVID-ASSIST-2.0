@@ -40,7 +40,7 @@ public class AddNewFeedActivity extends AppCompatActivity {
                 FirebaseDatabase.getInstance().getReference().child("UserFeed").push().setValue(map);
 
 
-                Intent intent = new Intent(getApplicationContext(), TabActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
 
 

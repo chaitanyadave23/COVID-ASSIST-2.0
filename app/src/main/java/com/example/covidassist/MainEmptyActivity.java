@@ -16,9 +16,9 @@ public class MainEmptyActivity extends AppCompatActivity {
         Intent activityIntent;
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            activityIntent = new Intent(this, TabActivity.class);
-        } else {
             activityIntent = new Intent(this, MainActivity.class);
+        } else {
+            activityIntent = new Intent(this, LoginActivity.class);
         }
 
         startActivity(activityIntent);

@@ -19,10 +19,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".MessageActivity" />
-        <activity android:name=".TabActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".AddNewFeedActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:theme="@style/Theme.AppCompat.Light">
 
         </activity>

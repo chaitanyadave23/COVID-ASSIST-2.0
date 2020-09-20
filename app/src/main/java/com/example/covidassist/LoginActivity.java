@@ -26,13 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-
-        }
+        
         buttonPhoneAuth = findViewById(R.id.buttonPhoneAuth);
 
         buttonPhoneAuth.setOnClickListener(new View.OnClickListener() {

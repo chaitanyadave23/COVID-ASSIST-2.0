@@ -39,8 +39,8 @@ public class AddNewFeedActivity extends AppCompatActivity {
 
                 FirebaseDatabase.getInstance().getReference().child("UserFeed").push().setValue(map);
 
-
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
 
 
@@ -48,6 +48,6 @@ public class AddNewFeedActivity extends AppCompatActivity {
             }
         });
 
-
     }
 }
+

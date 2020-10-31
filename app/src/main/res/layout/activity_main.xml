@@ -5,42 +5,53 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        android:id="@+id/appBarLayout">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:tabSelectedTextColor="@android:color/white"
-        app:tabTextColor="@android:color/darker_gray">
-
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabUserFeed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="UserFeed" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabChats"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Chats" />
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            app:titleTextColor="@color/white"
+            android:theme="?attr/actionBarTheme" />
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabMyFeed"
-            android:layout_width="wrap_content"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="MyFeed" />
+            android:background="@color/colorPrimary"
+            app:tabSelectedTextColor="@android:color/white"
+            app:tabIndicatorHeight="3dp"
+            app:tabIndicatorColor="@color/white"
+            app:tabTextColor="@android:color/darker_gray">
 
-    </com.google.android.material.tabs.TabLayout>
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabUserFeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UserFeed" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabChats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Chats" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabMyFeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MyFeed" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
     
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"

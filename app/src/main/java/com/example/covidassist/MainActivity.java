@@ -1,9 +1,12 @@
 package com.example.covidassist;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.covidassist.Adapters.ViewPagerAdapter;
 import com.example.covidassist.Fragments.UserFeedFragment;
@@ -20,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     TabItem tabUserFeed;
     TabItem tabChats;
     TabItem tabMyFeed;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,31 +45,19 @@ public class MainActivity extends AppCompatActivity {
         viewPagerAdapter.addFragment(new ChatFragment(), "Chats");
         viewPagerAdapter.addFragment(new MyFeedFragment(), "MyFeed");
 
-
         viewPager.setAdapter(viewPagerAdapter);
-
         tabLayout.setupWithViewPager(viewPager);
-
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
-
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_search_menu,menu);
 
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Search Here");
+
+        return super.onCreateOptionsMenu(menu);
+    }
 }

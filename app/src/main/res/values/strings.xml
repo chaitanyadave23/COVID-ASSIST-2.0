@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">COVID Assist</string>
+    <string name="app_name">CovidAssist</string>
     <string name="item_name">Name: </string>
     <string name="item_quantity">Quantity: </string>
     <string name="item_desc">Description: </string>

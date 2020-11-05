@@ -72,13 +72,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void showAlertDialog(FirebaseUser user) {
-        AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(
-                LoginActivity.this);
 
-        // Set Title
+        AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(LoginActivity.this);
         mAlertDialog.setTitle("Successfully Signed In");
-
-        // Set Message
         mAlertDialog.setMessage(" Phone Number is " + user.getPhoneNumber());
 
         mAlertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -86,9 +82,8 @@ public class LoginActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-        mAlertDialog.create();
 
-        // Showing Alert Message
+        mAlertDialog.create();
         mAlertDialog.show();
     }
 

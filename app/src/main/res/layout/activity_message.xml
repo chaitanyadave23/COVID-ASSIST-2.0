@@ -20,9 +20,9 @@
             android:background="@color/colorPrimaryDark">
             
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
                 android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:id="@+id/profile_image"/>
+                android:layout_height="30dp"/>
 
             <TextView
                 android:layout_width="match_parent"

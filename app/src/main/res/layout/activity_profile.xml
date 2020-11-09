@@ -12,8 +12,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/appBarLayout">
 
-
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -43,10 +41,10 @@
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profile_image"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="165dp"
+            android:layout_height="165dp"
             android:src="@drawable/ic_baseline_person_grey_24"
-            app:civ_border_width="2dp"
+            app:civ_border_width="0.5dp"
             app:civ_border_color="#FF000000"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -54,7 +52,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="centerInside"
-            android:elevation="1dp"
             android:src="@drawable/ic_baseline_photo_camera_24"
             android:layout_alignBottom="@+id/profile_image"
             android:layout_alignEnd="@+id/profile_image"
@@ -71,11 +68,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:clickable="true">
+
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:tint="@color/colorPrimary"
                 android:src="@drawable/ic_baseline_person_grey_24"/>
 
             <LinearLayout
@@ -107,25 +105,25 @@
 
 
                 <TextView
-                    android:id="@+id/tv_username"
+                    android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
-                    android:textColor="@android:color/black"
-                    android:text="Username"/>
+                    android:textColor="@android:color/black"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textSize="13sp"
                     android:textColor="#292727"
-                    android:text="This is not your username or pin. This name will be visible to your WhatsApp contact."/>
+                    android:text="This is not your username or pin. This name will be visible om your Userfeed."/>
 
             </LinearLayout>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
+            android:layout_marginLeft="62dp"
             android:layout_height="1dp"
             android:background="#EAEAEA"/>
 
@@ -137,7 +135,6 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:tint="@color/colorPrimary"
                 android:src="@drawable/ic_baseline_person_grey_24"/>
 
             <LinearLayout
@@ -157,7 +154,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="15sp"
                         android:textColor="#292727"
-                        android:text="About"/>
+                        android:text="Username"/>
                     <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -169,18 +166,18 @@
 
 
                 <TextView
-                    android:id="@+id/tv_about"
+                    android:id="@+id/tv_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
-                    android:textColor="@android:color/black"
-                    android:text="Hey there! I am using WhatsApp"/>
+                    android:textColor="@android:color/black"/>
 
             </LinearLayout>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
+            android:layout_marginLeft="62dp"
             android:layout_height="1dp"
             android:background="#EAEAEA"/>
         <LinearLayout
@@ -191,8 +188,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:tint="@color/colorPrimary"
-                android:src="@drawable/ic_baseline_person_grey_24"/>
+                android:src="@drawable/ic_baseline_phone_24"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -227,16 +223,72 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
-                    android:textColor="@android:color/black"
-                    android:text="+### ### ###"/>
+                    android:textColor="@android:color/black"/>
 
             </LinearLayout>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
+            android:layout_marginLeft="62dp"
             android:layout_height="1dp"
             android:background="#EAEAEA"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_baseline_location_on_24"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="#292727"
+                        android:text="UserFeed Radius"/>
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_edit_24"
+                        android:tint="#7A7A7A"
+                        android:background="@android:color/transparent"
+                        />
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_user_feed_radius"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textColor="@android:color/black"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="13sp"
+                    android:textColor="#292727"
+                    android:text="This is the radius upto which you will be able to see the UserFeeds of other users."/>
+
+            </LinearLayout>
+        </LinearLayout>
+
     </LinearLayout>
 
     <Button

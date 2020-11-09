@@ -1,6 +1,7 @@
 package com.example.covidassist;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,10 +18,22 @@ import java.util.HashMap;
 public class AddNewFeedActivity extends AppCompatActivity {
     EditText item_name,item_quantity, item_desc;
     Button add_new_feed;
+    Toolbar toolBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_feed);
+
+        toolBar = findViewById(R.id.toolbar);
+        toolBar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
+
+        toolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         item_name = findViewById(R.id.edt_item_name);
         item_quantity = findViewById(R.id.edt_item_quantity);

@@ -59,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                 //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 //showAlertDialog(user);
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             } else {
                 /**
@@ -72,7 +73,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void showAlertDialog(FirebaseUser user) {
-
         AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(LoginActivity.this);
         mAlertDialog.setTitle("Successfully Signed In");
         mAlertDialog.setMessage(" Phone Number is " + user.getPhoneNumber());

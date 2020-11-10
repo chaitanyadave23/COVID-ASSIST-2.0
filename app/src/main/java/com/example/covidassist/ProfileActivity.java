@@ -1,14 +1,20 @@
 package com.example.covidassist;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.print.PrintJob;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +31,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Source;
 
 import java.util.jar.Attributes;
+import java.util.jar.Manifest;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
     private Toolbar toolBar;
@@ -33,6 +42,8 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView PhoneView;
     private TextView UsernameView;
     private TextView User_feed_radiusView;
+    private CircleImageView profileImage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +59,32 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+
         NameView = findViewById(R.id.tv_name);
         PhoneView = findViewById(R.id.tv_phone);
         UsernameView = findViewById(R.id.tv_username);
         User_feed_radiusView = findViewById(R.id.tv_user_feed_radius);
+        profileImage = findViewById(R.id.profile_image);
+
+
+        //Camera implementation---------------------------------------------------------------------
+
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                askCameraPermission();
+            }
+        });
+
+
+
+
+
+
+        //Fetching data from firestore------------------------------------------------------------------------
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
         DocumentReference docRef = db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
         Source source = Source.CACHE;
         docRef.get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -81,6 +109,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
 
+        //Sign out implementation--------------------------------------
 
         signOutButton = findViewById(R.id.btn_sign_out);
         signOutButton.setOnClickListener(new View.OnClickListener() {
@@ -110,5 +139,45 @@ public class ProfileActivity extends AppCompatActivity {
             alertDialog.show();
             }
         });
+    }
+
+    private void askCameraPermission() {
+        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.CAMERA}, 101);
+        }
+        else{
+            openCamera();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode == 101 ){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                openCamera();
+            }
+            else{
+                Toast.makeText(this, "Camera Permission is required to use the camera", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
+    }
+
+    private void openCamera() {
+        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(camera, 102);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 102) {
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            profileImage.setImageBitmap(image);
+        }
     }
 }

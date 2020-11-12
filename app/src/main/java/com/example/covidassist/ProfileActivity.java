@@ -8,10 +8,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.print.PrintJob;
 import android.provider.MediaStore;
@@ -30,6 +34,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Source;
 
+import java.io.File;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
@@ -77,16 +82,12 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
 
-
-
-
-
         //Fetching data from firestore------------------------------------------------------------------------
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        Source source = Source.CACHE;
-        docRef.get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -98,11 +99,10 @@ public class ProfileActivity extends AppCompatActivity {
                         User_feed_radiusView.setText(document.getString("Userfeed_radius") + " km");
 
                     } else {
-                        //Log.d(TAG, "No such document");
                         Toast.makeText(getBaseContext(), FirebaseAuth.getInstance().getCurrentUser().getUid() , Toast.LENGTH_LONG).show();
                     }
-                } else {
-                   // Log.d(TAG, "get failed with ", task.getException());
+                }
+                else {
                     Toast.makeText(getBaseContext(), "get failed with ", Toast.LENGTH_LONG).show();
                 }
             }
@@ -141,43 +141,86 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
+
     private void askCameraPermission() {
         if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.CAMERA}, 101);
         }
         else{
-            openCamera();
+            selectImage();
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
         if(requestCode == 101 ){
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                openCamera();
+                //openCamera();
+                selectImage();
             }
             else{
                 Toast.makeText(this, "Camera Permission is required to use the camera", Toast.LENGTH_SHORT).show();
             }
         }
-
-
     }
 
-    private void openCamera() {
-        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(camera, 102);
+    private void selectImage() {
+        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
+        builder.setTitle("Choose your profile picture!");
+
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+
+                if (options[item].equals("Take Photo")) {
+                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(takePicture, 0);
+
+                } else if (options[item].equals("Choose from Gallery")) {
+                    /*Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(pickPhoto , 1);*/
+
+                    Intent pickPhoto = new Intent();
+                    pickPhoto.setType("image/*");
+                    pickPhoto.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(pickPhoto, "Pick an image"), 1);
+
+                } else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
     }
 
+
+
+    //Called when an activity you launched exits, giving you the requestCode you started it with, the resultCode it returned, and any additional data from it. The resultCode will be RESULT_CANCELED if the activity explicitly returned that, didn't return any result, or crashed during its operation.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 102) {
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            profileImage.setImageBitmap(image);
+        if (resultCode != RESULT_CANCELED) {
+            switch (requestCode) {
+                case 0:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+                        profileImage.setImageBitmap(selectedImage);
+                    }
+                    break;
+
+                case 1:
+                    if(requestCode == 1 && resultCode ==RESULT_OK && data != null){
+                        Uri imageData = data.getData();
+                        profileImage.setImageURI(imageData);
+                    }
+                    break;
+            }
         }
     }
+
+
 }

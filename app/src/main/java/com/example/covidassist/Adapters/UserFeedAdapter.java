@@ -62,7 +62,7 @@ public class UserFeedAdapter extends RecyclerView.Adapter<UserFeedAdapter.MyView
             item_name = (TextView) itemView.findViewById(R.id.item_name);
             item_desc = (TextView) itemView.findViewById(R.id.item_desc);
             item_quantity = (TextView) itemView.findViewById(R.id.item_quantity);
-            user_id = (TextView) itemView.findViewById(R.id.user_id);
+            //user_id = (TextView) itemView.findViewById(R.id.user_id);
         }
     }
 }

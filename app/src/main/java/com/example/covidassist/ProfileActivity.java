@@ -160,7 +160,7 @@ public class ProfileActivity extends AppCompatActivity {
                 selectImage();
             }
             else{
-                Toast.makeText(this, "Camera Permission is required to use the camera", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Camera Permission is required to set the profile picture", Toast.LENGTH_SHORT).show();
             }
         }
     }

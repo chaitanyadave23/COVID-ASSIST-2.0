@@ -84,7 +84,7 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-               // Toast.makeText(getActivity(), "Something is wrong", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getActivity(), "Something is wrong", Toast.LENGTH_SHORT).show();
             }
         });
 

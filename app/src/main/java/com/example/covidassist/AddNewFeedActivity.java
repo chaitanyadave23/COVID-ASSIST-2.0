@@ -41,23 +41,32 @@ public class AddNewFeedActivity extends AppCompatActivity {
 
         add_new_feed = findViewById(R.id.btn_add_feed);
 
+        Toast.makeText(getApplicationContext(), "Please enter all the fields", Toast.LENGTH_LONG);
+
+
         add_new_feed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HashMap<String, Object> map = new HashMap<>();
-                map.put("user_id", FirebaseAuth.getInstance().getUid());
-                map.put("item_name", item_name.getText().toString());
-                map.put("item_quantity", item_quantity.getText().toString());
-                map.put("item_desc", item_desc.getText().toString());
 
-                FirebaseDatabase.getInstance().getReference().child("UserFeed").push().setValue(map);
+                if(item_name.getText().toString().length()==0 || item_quantity.getText().toString().length()==0 || item_desc.getText().toString().length()==0){
+                    Toast.makeText(getApplicationContext(), "Please enter all the fields", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    HashMap<String, Object> map = new HashMap<>();
+                    map.put("user_id", FirebaseAuth.getInstance().getUid());
+                    map.put("item_name", item_name.getText().toString());
+                    map.put("item_quantity", item_quantity.getText().toString());
+                    map.put("item_desc", item_desc.getText().toString());
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                    FirebaseDatabase.getInstance().getReference().child("UserFeed").push().setValue(map);
 
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
 
-                Toast. makeText(getApplicationContext(),"Feed Added Successfully",Toast. LENGTH_SHORT);
+                    Toast. makeText(getApplicationContext(),"New feed added successfully",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

@@ -15,19 +15,36 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
             app:titleTextColor="@color/white"
             android:theme="?attr/actionBarTheme">
 
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:textSize="21.5sp"/>
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Feed"
+                    android:textStyle="bold"
+                    android:layout_marginTop="9dp"
+                    android:textColor="@color/white"
+                    android:textSize="21.5sp"/>
+
+                <Button
+                    android:id="@+id/btn_add_feed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="11dp"
+                    android:text="Add Feed"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:background="@color/white" />
+
+            </RelativeLayout>
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -88,11 +105,6 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/btn_add_feed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add feed"/>
-
+    
 </LinearLayout>
 

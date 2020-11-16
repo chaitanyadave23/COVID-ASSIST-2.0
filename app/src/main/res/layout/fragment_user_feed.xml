@@ -26,6 +26,8 @@
         android:clickable="true"
         android:focusable="true"
         app:rippleColor="@color/colorPrimary"
+        app:backgroundTint="@color/lightBlue"
+        app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

@@ -10,8 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.covidassist.Model.feed;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 
@@ -47,18 +49,20 @@ public class AddNewFeedActivity extends AppCompatActivity {
         add_new_feed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String user_id = FirebaseAuth.getInstance().getUid();
+                String itemName = item_name.getText().toString();
+                String itemQuantity = item_quantity.getText().toString();
+                String desc = item_desc.getText().toString();
 
-                if(item_name.getText().toString().length()==0 || item_quantity.getText().toString().length()==0 || item_desc.getText().toString().length()==0){
+                if(itemName.length()==0 || itemQuantity.length()==0 || desc.toString().length()==0){
                     Toast.makeText(getApplicationContext(), "Please enter all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    HashMap<String, Object> map = new HashMap<>();
-                    map.put("user_id", FirebaseAuth.getInstance().getUid());
-                    map.put("item_name", item_name.getText().toString());
-                    map.put("item_quantity", item_quantity.getText().toString());
-                    map.put("item_desc", item_desc.getText().toString());
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                    FirebaseDatabase.getInstance().getReference().child("UserFeed").push().setValue(map);
+                    feed userFeed = new feed(itemName, itemQuantity, desc, user_id);
+
+                    db.collection("UserFeed").add(userFeed);
 
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

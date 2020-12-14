@@ -17,17 +17,18 @@ import com.example.covidassist.AddNewFeedActivity;
 import com.example.covidassist.Adapters.UserFeedAdapter;
 import com.example.covidassist.R;
 import com.example.covidassist.Model.feed;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
 
 
 /**
@@ -35,15 +36,14 @@ import android.view.View.OnClickListener;
  */
 public class UserFeedFragment extends Fragment implements OnClickListener{
 
+    FloatingActionButton add;
+    FirebaseUser fuser;
+    RecyclerView recyclerView;
+    FirestoreRecyclerAdapter adapter;
+
     public UserFeedFragment() {
         // Required empty public constructor
     }
-    FloatingActionButton add;
-    FirebaseUser fuser;
-    DatabaseReference reference;
-    RecyclerView recyclerView;
-    ArrayList<feed> list;
-    UserFeedAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,39 +55,12 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        fuser = FirebaseAuth.getInstance().getCurrentUser();;
-        //String fuid = fuser.getUid();
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
 
         add = getView().findViewById(R.id.floatingActionAdd);
         add.setOnClickListener((OnClickListener) this);
 
         recyclerView = (RecyclerView) getView().findViewById(R.id.myRecycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        list = new ArrayList<feed>();
-        reference = FirebaseDatabase.getInstance().getReference().child("UserFeed");
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                list.clear(); //to clear the data in the list once it is updated otherwise the list will not clear and all the data will be added again
-                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren())
-                {
-                    feed f = dataSnapshot1.getValue(feed.class);
-                    final String fuid = fuser.getUid();
-                    if(!f.getUser_id().equals(fuid)) list.add(f);
-
-                }
-
-                adapter = new UserFeedAdapter(getActivity(),list);
-                recyclerView.setAdapter(adapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Toast.makeText(getActivity(), "Something is wrong", Toast.LENGTH_SHORT).show();
-            }
-        });
-
 
     }
 
@@ -97,6 +70,54 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
         startActivity(intent);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
 
+        Query query = FirebaseFirestore.getInstance().collection("UserFeed");
+
+        FirestoreRecyclerOptions<feed> options = new FirestoreRecyclerOptions.Builder<feed>().setQuery(query, feed.class).build();
+
+        adapter = new FirestoreRecyclerAdapter<feed, FeedViewHolder>(options) {
+            @NonNull
+            @Override
+            public FeedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
+                return new FeedViewHolder(view);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull FeedViewHolder holder, int position, @NonNull feed model) {
+                holder.item_name.setText(model.getItem_name());
+                holder.item_desc.setText(model.getItem_desc());
+                holder.item_quantity.setText(model.getItem_quantity());
+            }
+        };
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
+
+        adapter.startListening();
+    }
+
+    private class FeedViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView item_name;
+        private TextView item_quantity;
+        private TextView item_desc;
+
+        public FeedViewHolder(@NonNull View itemView) {
+            super(itemView);
+            item_name = (TextView) itemView.findViewById(R.id.item_name);
+            item_desc = (TextView) itemView.findViewById(R.id.item_desc);
+            item_quantity = (TextView) itemView.findViewById(R.id.item_quantity);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.example.covidassist;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -11,8 +12,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.covidassist.Model.feed;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -62,15 +66,23 @@ public class AddNewFeedActivity extends AppCompatActivity {
 
                     feed userFeed = new feed(itemName, itemQuantity, desc, user_id);
 
-                    db.collection("UserFeed").add(userFeed);
-
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-
-                    Toast. makeText(getApplicationContext(),"New feed added successfully",Toast.LENGTH_SHORT).show();
+                    db.collection("UserFeed").add(userFeed)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                    Toast. makeText(getApplicationContext(),"New feed added successfully",Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast. makeText(getApplicationContext(),"Error in adding to db",Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 }
-
             }
         });
 

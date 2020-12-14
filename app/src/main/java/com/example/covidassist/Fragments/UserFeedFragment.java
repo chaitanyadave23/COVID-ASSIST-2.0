@@ -27,6 +27,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 

@@ -77,7 +77,7 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
     public void onStart() {
         super.onStart();
 
-        Query query = FirebaseFirestore.getInstance().collection("UserFeed");
+        Query query = FirebaseFirestore.getInstance().collection("UserFeed").whereNotEqualTo("user_id", fuser.getUid());
 
         FirestoreRecyclerOptions<feed> options = new FirestoreRecyclerOptions.Builder<feed>().setQuery(query, feed.class).build();
 

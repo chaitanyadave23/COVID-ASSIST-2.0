@@ -36,15 +36,14 @@ import android.widget.TextView;
  */
 public class UserFeedFragment extends Fragment implements OnClickListener{
 
+    FloatingActionButton add;
+    FirebaseUser fuser;
+    RecyclerView recyclerView;
+    FirestoreRecyclerAdapter adapter;
+
     public UserFeedFragment() {
         // Required empty public constructor
     }
-    FloatingActionButton add;
-    FirebaseUser fuser;
-    DatabaseReference reference;
-    RecyclerView recyclerView;
-    ArrayList<feed> list;
-    UserFeedAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,17 +62,27 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
 
         recyclerView = (RecyclerView) getView().findViewById(R.id.myRecycler);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(getActivity(), AddNewFeedActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
         Query query = FirebaseFirestore.getInstance().collection("UserFeed");
 
         FirestoreRecyclerOptions<feed> options = new FirestoreRecyclerOptions.Builder<feed>().setQuery(query, feed.class).build();
 
-
-
-        FirestoreRecyclerAdapter adapter = new FirestoreRecyclerAdapter<feed, FeedViewHolder>(options) {
+        adapter = new FirestoreRecyclerAdapter<feed, FeedViewHolder>(options) {
             @NonNull
             @Override
             public FeedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(getParentFragment().getContext()).inflate(R.layout.cardview, parent, false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
                 return new FeedViewHolder(view);
             }
 
@@ -87,21 +96,15 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
-    }
 
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(getActivity(), AddNewFeedActivity.class);
-        startActivity(intent);
+        adapter.startListening();
     }
-
 
     private class FeedViewHolder extends RecyclerView.ViewHolder {
 
         private TextView item_name;
         private TextView item_quantity;
         private TextView item_desc;
-
 
         public FeedViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -111,15 +114,10 @@ public class UserFeedFragment extends Fragment implements OnClickListener{
         }
     }
 
-    /*@Override
+    @Override
     public void onStop() {
         super.onStop();
         adapter.stopListening();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        adapter.startListening();
-    }*/
 }
